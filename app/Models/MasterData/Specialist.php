@@ -29,4 +29,11 @@ class Specialist extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    // declare relationship
+    public function doctor()
+    {
+        //2 parameter (model, foreign key)
+        return $this->hasMany('App\Models\Operational\Doctor', 'specialist_id');
+    }
 }
