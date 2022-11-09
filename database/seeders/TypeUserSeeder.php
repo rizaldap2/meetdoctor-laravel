@@ -1,7 +1,9 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\MasterData\TypeUser;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +16,7 @@ class TypeUserSeeder extends Seeder
      */
     public function run()
     {
-        //create data here
+        // create data here
         $type_user = [
             [
                 'name' => 'Admin',
@@ -22,18 +24,18 @@ class TypeUserSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name' => 'Doctor',
+                'name' => 'Dokter',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name' => 'Patient',
+                'name' => 'Pasien',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
 
-        //insert data
-        TypeUser::create($type_user);
+        // this array $type_user will be insert to table 'type_user'
+        TypeUser::insert($type_user);
     }
 }

@@ -7,7 +7,7 @@ use App\Models\MasterData\Consultation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CosultationSeeder extends Seeder
+class ConsultationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,10 +16,10 @@ class CosultationSeeder extends Seeder
      */
     public function run()
     {
-        // create code
+        // create data here
         $consultation = [
             [
-                'name' => 'jantung Sesak',
+                'name' => 'Jantung Sesak',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -29,13 +29,13 @@ class CosultationSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name' => 'Ganguan Irama Jantung',
+                'name' => 'Gangguan Irama Jantung',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
 
-        //insert data
-        Consultation::create($consultation);
+        // this array $consultation will be insert to table 'consultation'
+        Consultation::insert($consultation);
     }
 }
