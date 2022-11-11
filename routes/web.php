@@ -20,16 +20,20 @@ use Illuminate\Auth\Events\Verified;
 
 Route::resource('/', LandingController::class);
 
+Route::group(['middleware' => ['auth:sanctum','verified']], 
+function () {
+    //appointment pages
+    Route::resource('Appointment', AppointmentController::class);
+    //payment pages
+    Route::resource('payment', PaymentController::class);
+});
+
 
 Route::group(['prefix' => 'backsite', 'as' => 'backsite.' , 'middleware' => ['auth:sanctum','verified']], 
 function () {
-    // return view('backsite.dashboard');
 
-    //appointment pages
-    Route::resource('Appointment', AppointmentController::class);
+    return view('dashboard');
 
-    //payment pages
-    Route::resource('payment', PaymentController::class);
 });
 
 
