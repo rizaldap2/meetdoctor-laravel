@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//use frontside controller
+use App\Http\Controllers\frontsite\LandingController;
+use App\Http\Controllers\frontsite\AppointmentController;
+use App\Http\Controllers\frontsite\PaymentController;
+use Illuminate\Auth\Events\Verified;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +18,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::resource('/', LandingController::class);
+
+
+Route::group(['prefix' => 'backsite', 'as' => 'backsite.' , 'middleware' => ['auth:sanctum','verified']], 
+function () {
+    // return view('backsite.dashboard');
+
+    //appointment pages
+    Route::resource('Appointment', AppointmentController::class);
+
+    //payment pages
+    Route::resource('payment', PaymentController::class);
 });
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
