@@ -31,6 +31,7 @@ class StoreSpecialistRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                'unique:specialist',
             ],
             'price'=> [
                 'required',

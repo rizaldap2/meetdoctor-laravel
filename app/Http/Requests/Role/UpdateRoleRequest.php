@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Role;
 use App\Models\ManagementAccess\Role;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateRoleRequest extends FormRequest
@@ -29,6 +30,7 @@ class UpdateRoleRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                Rule::unique('role')->ignore($this->role),
             ],
         ];
     }
