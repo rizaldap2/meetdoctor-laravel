@@ -23,7 +23,7 @@ Route::resource('/', LandingController::class);
 Route::group(['middleware' => ['auth:sanctum','verified']], 
 function () {
     //appointment pages
-    Route::resource('Appointment', AppointmentController::class);
+    Route::resource('appointment', AppointmentController::class);
     //payment pages
     Route::resource('payment', PaymentController::class);
 });
