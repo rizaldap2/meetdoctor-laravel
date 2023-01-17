@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
     <head>
 
         @include('includes.frontsite.meta')
@@ -12,6 +13,7 @@
 
     </head>
     <body>
+        @include('sweetalert::alert')
 
         
         @yield('content')
