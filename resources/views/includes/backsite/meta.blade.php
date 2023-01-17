@@ -5,7 +5,7 @@
 {{-- Seo Setting base --}}
 <meta name="description" content="{{ 'Meet your Doctor. Trusted & Professional' }}">
 <meta key="keywords" content="{{ 'Doctor, meetdoctor, patient, appointment, trusteed & profesional' }}">
-<meta name="author" content="{{ 'Meetdoctor' }}">
+<meta name="author" content="{{ 'ijaltech' }}">
 
 {{-- CSRF token --}}
 <meta name="csrf-token" content="{{ csrf_token() }}">
