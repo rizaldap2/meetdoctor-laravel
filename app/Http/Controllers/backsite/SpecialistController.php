@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-// use libary here
+// use library here
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
-//use rqeuest here
+// request
 use App\Http\Requests\Specialist\StoreSpecialistRequest;
 use App\Http\Requests\Specialist\UpdateSpecialistRequest;
 
@@ -17,11 +16,23 @@ use App\Http\Requests\Specialist\UpdateSpecialistRequest;
 use Gate;
 use Auth;
 
-//use model here
+// use model here
 use App\Models\MasterData\Specialist;
+
+// thirdparty package
 
 class SpecialistController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +40,10 @@ class SpecialistController extends Controller
      */
     public function index()
     {
-        $specialist = Specialist::all();
+        abort_if(Gate::denies('specialist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $specialist = Specialist::orderBy('created_at', 'desc')->get();
+
         return view('pages.backsite.master-data.specialist.index', compact('specialist'));
     }
 
@@ -63,7 +77,6 @@ class SpecialistController extends Controller
 
         alert()->success('Success Message', 'Successfully added new specialist');
         return redirect()->route('backsite.specialist.index');
-
     }
 
     /**
@@ -72,9 +85,11 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Specialist $specialist)
     {
-        return abort(404);
+        abort_if(Gate::denies('specialist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('pages.backsite.master-data.specialist.show', compact('specialist'));
     }
 
     /**
@@ -83,9 +98,11 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Specialist $specialist)
     {
-        return abort(404);
+        abort_if(Gate::denies('specialist_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('pages.backsite.master-data.specialist.edit', compact('specialist'));
     }
 
     /**
@@ -95,9 +112,20 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSpecialistRequest $request, Specialist $specialist)
     {
-        return abort(404);
+        // get all request from frontsite
+        $data = $request->all();
+
+
+        $data['price'] = str_replace(',', '', $data['price']);
+        $data['price'] = str_replace('IDR ', '', $data['price']);
+
+        // update to database
+        $specialist->update($data);
+
+        alert()->success('Success Message', 'Successfully updated specialist');
+        return redirect()->route('backsite.specialist.index');
     }
 
     /**
@@ -106,8 +134,13 @@ class SpecialistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Specialist $specialist)
     {
-        return abort(404);
+        abort_if(Gate::denies('specialist_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $specialist->forceDelete();
+
+        alert()->success('Success Message', 'Successfully deleted specialist');
+        return back();
     }
 }
